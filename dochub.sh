@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# step 1 : read the config file; if the file does not exist in the config directory, warn and exit.
+
+config_dir="."
+if [[ ! -f "$config_dir/config.json" ]]; then
+    echo "Config file not found! Create one in $config_dir."
+    exit -1
+fi
+
+# parse the config.json
+dochub_dir="$(jq -r '.dochub.dir' $config_dir/config.json)"
+# evaluate the dochub dir to expand the $HOME or the ~
+eval dochub_dir=$dochub_dir
+
+# parse the viewer in which documents have to be viewed.
+reader="$(jq -r '.reader.cmd' $config_dir/config.json)"
+
+#------------------------------------------------------------
+# create helper functions.
+
+fzfOpen() {
+    bookPath="${1}"
+    cd "$bookPath"
+    fzfexec="$(fzf)"
+    path="$bookPath/$fzfexec"
+    $reader "$path" >/dev/null 2>&1 &
+    disown
+    cd -
+}
+
+openBookProgramming() {
+    subtype="${1}"
+    case "$subtype" in
+    "asm")
+        path="$dochub_dir/Assembly"
+        fzfOpen "$path"
+        ;;
+    "c")
+        path="$dochub_dir/C"
+        fzfOpen "$path"
+        ;;
+    "bash")
+        path="$dochub_dir/Bash"
+        fzfOpen "$path"
+        ;;
+    "lua")
+        path="$dochub_dir/Lua"
+        fzfOpen "$path"
+        ;;
+    *)
+        echo "Invalid programming lang"
+        exit -1
+        ;;
+    esac
+
+}
+
+# step 2 : Create the book types.
+btype="${1:-misc}"
+
+case "$btype" in
+"misc")
+    fzfOpen "$dochub_dir"
+    ;;
+"programming")
+    openBookProgramming "${2}"
+    ;;
+"linux")
+    echo "Linux"
+    ;;
+"cs")
+    echo "Computer Systems"
+    ;;
+*)
+    echo "Invalid Book Type."
+    exit -1
+    ;;
+esac

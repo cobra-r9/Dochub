@@ -1,0 +1,8 @@
+{
+    "dochub": {
+        "dir" : "$HOME/Workspace/Dochub"
+    },
+    "reader": {
+        "cmd" : "okular"
+    }
+}
