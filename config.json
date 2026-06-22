@@ -3,6 +3,6 @@
         "dir" : "$HOME/Workspace/Dochub"
     },
     "reader": {
-        "cmd" : "okular"
+        "cmd" : "zathura"
     }
 }
