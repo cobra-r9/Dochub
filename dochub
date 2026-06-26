@@ -2,7 +2,7 @@
 
 # step 1 : read the config file; if the file does not exist in the config directory, warn and exit.
 
-config_dir="."
+config_dir="~/Workspace/dochub"
 if [[ ! -f "$config_dir/config.json" ]]; then
     echo "Config file not found! Create one in $config_dir."
     exit -1

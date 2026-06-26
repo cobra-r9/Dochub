@@ -1,6 +1,6 @@
 {
     "dochub": {
-        "dir" : "$HOME/Workspace/Dochub"
+        "dir" : "$HOME/Workspace/dochub"
     },
     "reader": {
         "cmd" : "zathura"
