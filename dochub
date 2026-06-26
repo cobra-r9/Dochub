@@ -2,7 +2,7 @@
 
 # step 1 : read the config file; if the file does not exist in the config directory, warn and exit.
 
-config_dir="~/Workspace/dochub"
+config_dir="$HOME/Workspace/dochub"
 if [[ ! -f "$config_dir/config.json" ]]; then
     echo "Config file not found! Create one in $config_dir."
     exit -1
@@ -24,6 +24,7 @@ fzfOpen() {
     cd "$bookPath"
     fzfexec="$(fzf)"
     path="$bookPath/$fzfexec"
+    bspc node -o 0.33
     $reader "$path" >/dev/null 2>&1 &
     disown
     cd -
