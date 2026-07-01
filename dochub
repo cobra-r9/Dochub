@@ -24,7 +24,7 @@ fzfOpen() {
     cd "$bookPath"
     fzfexec="$(fzf)"
     path="$bookPath/$fzfexec"
-    bspc node -o 0.4
+    nexl node -o 0.4
     $reader "$path" >/dev/null 2>&1 &
     disown
     cd -
